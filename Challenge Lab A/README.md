@@ -53,3 +53,66 @@ sudo useradd -m -s /bin/bash -g Sales sales_user2
 sudo useradd -m -s /bin/bash -g IS is_user1
 sudo useradd -m -s /bin/bash -g IS is_user2
 ```
+### Step 4: Assigning Directory Ownership and Group
+
+Assign each department directory to the admin user and set the group ownership:
+
+```bash
+sudo chown eng_admin:Engineering /Engineering
+sudo chown sales_admin:Sales /Sales
+sudo chown is_admin:IS /IS
+```
+### Step 5: Setting Directory Permissions
+
+Configure directory permissions so that:
+
+- Admin has full access
+- Department users have full access
+- Other users have no access
+  
+```bash
+sudo chmod 770 /Engineering
+sudo chmod 770 /Sales
+sudo chmod 770 /IS
+```
+### Step 6: Creating Confidential Files
+
+```bash
+# Engineering
+sudo touch /Engineering/confidential.txt
+sudo chown eng_admin:Engineering /Engineering/confidential.txt
+sudo chmod 640 /Engineering/confidential.txt
+echo "This file contains confidential information for the department." | sudo tee /Engineering/confidential.txt
+
+# Sales
+sudo touch /Sales/confidential.txt
+sudo chown sales_admin:Sales /Sales/confidential.txt
+sudo chmod 640 /Sales/confidential.txt
+echo "This file contains confidential information for the department." | sudo tee /Sales/confidential.txt
+
+# IS
+sudo touch /IS/confidential.txt
+sudo chown is_admin:IS /IS/confidential.txt
+sudo chmod 640 /IS/confidential.txt
+echo "This file contains confidential information for the department." | sudo tee /IS/confidential.txt
+```
+### Step 7: Verification
+Check that directories and files have the correct ownership and permissions:
+
+```bash
+ls -ld /Engineering /Sales /IS
+ls -l /Engineering/confidential.txt
+ls -l /Sales/confidential.txt
+ls -l /IS/confidential.txt
+```
+
+After completing the lab, all department directories and confidential files are properly secured:
+
+- Department administrators have full ownership and control.
+
+- Department groups can read, write, and execute within their directories.
+
+- Other users have no access to these directories or files.
+
+By following these steps, the Linux server is configured so that each department has secure, controlled access to its resources, ensuring proper administrative control and confidentiality of department data
+
